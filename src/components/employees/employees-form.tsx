@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
 
 export function EmployeesForm(props: any) {
   const { employee, onSave } = props;
+  console.log(employee);
   const {
     register,
     handleSubmit,
@@ -11,91 +15,114 @@ export function EmployeesForm(props: any) {
   const onSubmit = (data: any) => onSave(data);
 
   return (
-    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-1/2 mx-auto"
-    >
-      <input
-        placeholder="First Name"
-        defaultValue={employee?.first_name}
-        {...register("first_name", {
-          required: true,
-        })}
-      />
-      {errors.first_name && <span>This field is required</span>}
+    <>
+      <h1 className="text-2xl font-bold text-center">Add Employee</h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col w-1/2 mx-auto gap-4"
+      >
+        <div className="flex flex-col gap-1">
+          <Label>First Name</Label>
+          <Input
+            placeholder="First Name"
+            defaultValue={employee?.first_name}
+            {...register("first_name", {
+              required: true,
+            })}
+          />
+          {errors.first_name && <span className="text-destructive">This field is required</span>}
+        </div>
 
-      <input
-        placeholder="Last Name"
-        defaultValue={employee?.last_name}
-        {...register("last_name", { required: true })}
-      />
+        <div>
+          <Label>Last Name</Label>
 
-      {errors.last_name && <span>This field is required</span>}
+          <Input
+            placeholder="Last Name"
+            defaultValue={employee?.last_name}
+            {...register("last_name", { required: true })}
+          />
 
-      <input
-        placeholder="ID Number"
-        defaultValue={employee?.id_number}
-        {...register("id_number", { required: true })}
-      />
+          {errors.last_name && <span className="text-destructive">This field is required</span>}
+        </div>
+        <div>
+          <Label>ID Number</Label>
+          <Input
+            placeholder="ID Number"
+            defaultValue={employee?.id_number}
+            {...register("id_number", { required: true })}
+          />
 
-      {errors.id_number && <span>This field is required</span>}
+          {errors.id_number && <span className="text-destructive">This field is required</span>}
+        </div>
+        <div>
+          <Label>Phone Number</Label>
+          <Input
+            placeholder="Phone Number"
+            defaultValue={employee?.phone}
+            {...register("phone", { required: true })}
+          />
 
-      <input
-        placeholder="Phone Number"
-        defaultValue={employee?.phone}
-        {...register("phone", { required: true })}
-      />
+          {errors.phone && <span className="text-destructive">This field is required</span>}
+        </div>
+        <div>
+          <Label>Email Address</Label>
+          <Input
+            placeholder="Email Address"
+            defaultValue={employee?.email_address}
+            {...register("email_address", {
+              required: true,
+              validate: {
+                matchPattern: (v) =>
+                  /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+                  "Email address must be a valid address",
+              },
+            })}
+          />
 
-      {errors.phone && <span>This field is required</span>}
+          {errors.email_address?.type === "required" && (
+            <small className="text-destructive">Email is required</small>
+          )}
 
-      <input
-        placeholder="Email Address"
-        defaultValue={employee?.email_address}
-        {...register("email_address", {
-          required: true,
-          validate: {
-            matchPattern: (v) =>
-              /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-              "Email address must be a valid address",
-          },
-        })}
-      />
+          {errors.email_address?.type === "matchPattern" && (
+            <small className="text-destructive">Email address must be a valid address</small>
+          )}
+        </div>
+        <div>
+          <Label>NHIF Number</Label>
+          <Input
+            placeholder="NHIF Number"
+            defaultValue={employee?.nhif_number}
+            {...register("nhif_number", { required: true })}
+          />
 
-      {errors.email_address?.type === "required" && (
-        <small>Email is required</small>
-      )}
-
-      {errors.email_address?.type === "matchPattern" && (
-        <small>Email address must be a valid address</small>
-      )}
-
-      <input
-        placeholder="NHIF Number"
-        defaultValue={employee?.nhif_number}
-        {...register("nhif_number", { required: true })}
-      />
-
-      {errors.nhif_number && <span>This field is required</span>}
-
-      <input
-        placeholder="Branch"
-        defaultValue={employee?.branch}
-        {...register("branch", {
-          required: true,
-        })}
-      />
-      {errors.branch && <span>This field is required</span>}
-      <input
-        placeholder="Department"
-        defaultValue={employee?.department}
-        {...register("department", {
-          required: true,
-        })}
-      />
-      {errors.department && <span>This field is required</span>}
-
-      <input type="submit" className="submit"/>
-    </form>
+          {errors.nhif_number && <span className="text-destructive">This field is required</span>}
+        </div>
+        <div>
+          <Label>Branch</Label>
+          <Input
+            placeholder="Branch"
+            defaultValue={employee?.branch}
+            {...register("branch", {
+              required: true,
+            })}
+          />
+          {errors.branch && <span className="text-destructive">This field is required</span>}
+        </div>
+        <div>
+          <Label>Department</Label>
+          <Input
+            placeholder="Department"
+            defaultValue={employee?.department}
+            {...register("department", {
+              required: true,
+            })}
+          />
+          {errors.department && <span className="text-destructive">This field is required</span>}
+        </div>
+        <Button asChild>
+          <input type="submit" className="submit" value="Add Employee"/>
+        </Button>
+      </form>
+    </>
   );
 }

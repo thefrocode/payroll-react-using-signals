@@ -1,12 +1,18 @@
 import { EmployeesForm } from "@/components/employees/employees-form";
-import { Employee } from "@/data-access/interfaces/employee";
 import { useEmployee } from "@/data-access/store/employees-store";
+import { useMatch } from "@tanstack/react-location";
 
 export function EmployeesEdit() {
-  const { editEmployee } = useEmployee();
-  const onEmployeeEdited = (data: Employee) => {
-    editEmployee(data);
+  const {
+    params: { id },
+  } = useMatch();
+  const { employees, editEmployee } = useEmployee();
+
+  const employee = employees?.find((employee) => employee.id === +id);
+
+  const onEmployeeEdited = (data: any) => {
+    editEmployee({ ...data, id: +id });
   };
 
-  return <EmployeesForm onSave={onEmployeeEdited} />;
+  return <EmployeesForm employee={employee} onSave={onEmployeeEdited} />;
 }

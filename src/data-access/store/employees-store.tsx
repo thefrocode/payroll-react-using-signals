@@ -1,3 +1,4 @@
+import { useToast } from "@/components/ui/use-toast";
 import {
   UseMutateFunction,
   useMutation,
@@ -30,6 +31,7 @@ function useEmployeeSource(): {
   filterEmployees: (search: string) => void;
 } {
   //Fetch all employees
+  const { toast } = useToast()
   const queryClient = useQueryClient();
   const { data: employees, error } = useQuery(["employees"], fetchEmployees, {
     initialData: [],
@@ -41,7 +43,9 @@ function useEmployeeSource(): {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["employees"] });
-      alert("Employee Added");
+      toast({
+        description: "Employee Added Successfully",
+      })
     },
   });
   const { mutate: editEmployee } = useMutation({
@@ -49,7 +53,9 @@ function useEmployeeSource(): {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["employees"] });
-      alert("Employee Updated");
+      toast({
+        description: "Employee Edited Successfully",
+      })
     },
   });
   const { mutate: removeEmployee } = useMutation({

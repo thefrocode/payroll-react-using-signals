@@ -1,327 +1,338 @@
 {
-    "employees": [
-      {
-        "id": 2,
-        "first_name": "Jane",
-        "last_name": "Doe",
-        "email": "janedoe@gmail.com",
-        "phone": "254700000001",
-        "id_number": "12345668",
-        "email_address": "aa@gmail.com",
-        "nhif_number": "12345668",
-        "employee_id": "34234",
-        "branch": "Rongai",
-        "department": "Tech"
-      },
-      {
-        "first_name": "John",
-        "last_name": "Doe",
-        "id_number": "123435",
-        "phone": "342342",
-        "email_address": "aa@gmail.com",
-        "id": 3,
-        "employee_id": "356354",
-        "nhif_number": "afs",
-        "branch": "CBD",
-        "department": "Tech"
-      },
-      {
-        "first_name": "jjj",
-        "last_name": "aaa",
-        "id_number": "aaas",
-        "phone": "254769735528",
-        "email_address": "aa@gmail.com",
-        "id": 4,
-        "employee_id": "576",
-        "nhif_number": "324",
-        "branch": "Rongai",
-        "department": "Sales"
-      }
-    ],
-    "income_types": [
-      {
-        "id": 1,
-        "name": "Basic Salary",
-        "code": "BS"
-      },
-      {
-        "id": 2,
-        "name": "Overtime",
-        "code": "OT"
-      },
-      {
-        "id": 3,
-        "name": "Bonus",
-        "code": "BN"
-      },
-      {
-        "id": 4,
-        "name": "Commission",
-        "code": "CO"
-      },
-      {
-        "id": 5,
-        "name": "Allowance",
-        "code": "AL"
-      }
-    ],
-    "incomes": [
-      {
-        "employee_id": 2,
-        "income_type_id": 1,
-        "amount": 60000,
-        "month": 1,
-        "year": 2023,
-        "id": 2
-      },
-      {
-        "employee_id": 3,
-        "income_type_id": 1,
-        "amount": 20000,
-        "month": 1,
-        "year": null,
-        "id": 3
-      },
-      {
-        "employee_id": 2,
-        "income_type_id": 4,
-        "amount": 10000,
-        "month": 1,
-        "year": 2023,
-        "id": 4
-      },
-      {
-        "employee_id": 2,
-        "income_type_id": 1,
-        "amount": 60000,
-        "month": 9,
-        "year": 2023,
-        "id": 5
-      },
-      {
-        "employee_id": 3,
-        "income_type_id": 1,
-        "amount": 90000,
-        "month": 9,
-        "year": 2023,
-        "id": 6
-      },
-      {
-        "employee_id": 2,
-        "income_type_id": 2,
-        "amount": 5000,
-        "month": 9,
-        "year": 2023,
-        "id": 7
-      }
-    ],
-    "deduction_types": [
-      {
-        "id": 1,
-        "name": "Sacco",
-        "code": "SC"
-      },
-      {
-        "id": 2,
-        "name": "Advance",
-        "code": "AD"
-      },
-      {
-        "id": 3,
-        "name": "Welfare",
-        "code": "WE"
-      },
-      {
-        "id": 4,
-        "name": "Loan",
-        "code": "LO"
-      },
-      {
-        "id": 5,
-        "name": "Commission",
-        "code": "CO"
-      },
-      {
-        "id": 6,
-        "name": "HELB",
-        "code": "HE"
-      }
-    ],
-    "deductions": [
-      {
-        "employee_id": 2,
-        "deduction_type_id": 1,
-        "amount": 10000,
-        "month": 1,
-        "year": 2024,
-        "id": 1
-      },
-      {
-        "employee_id": 2,
-        "deduction_type_id": 1,
-        "amount": 9000,
-        "month": 9,
-        "year": 2023,
-        "id": 2
-      }
-    ],
-    "formulas": [
-      {
-        "id": 1,
-        "name": "Gross Pay",
-        "formula": "BS + CO + OT + FD"
-      },
-      {
-        "id": 2,
-        "name": "NSSF Tier 1",
-        "formula": "gross_pay<=6000?0.06*gross_pay:360"
-      },
-      {
-        "id": 3,
-        "name": "NSSF Tier 2",
-        "formula": "gross_pay>6000?(gross_pay<18000?0.06*(gross_pay-6000):720):0"
-      },
-      {
-        "id": 4,
-        "name": "NSSF",
-        "formula": "nssf_tier_1 + nssf_tier_2"
-      },
-      {
-        "id": 5,
-        "name": "Taxable Income",
-        "formula": "gross_pay - nssf"
-      },
-      {
-        "id": 6,
-        "name": "Tax Before Relief",
-        "formula": "taxable_income <= 32333 ? (taxable_income > 24000 ? (2400 + (taxable_income - 24000) * 0.25) : taxable_income * 0.1) : (4483.25 + (taxable_income-32333) * 0.3)"
-      },
-      {
-        "id": 7,
-        "name": "Personal Relief",
-        "formula": "taxable_income>24000? 2400: taxable_income * 0.1"
-      },
-      {
-        "id": 8,
-        "name": "NHIF",
-        "formula": "gross_pay<100000? (gross_pay<90000? (gross_pay < 80000?(gross_pay < 70000? (gross_pay < 60000? (gross_pay < 50000 ? (gross_pay < 45000? (gross_pay < 40000? (gross_pay < 35000? (gross_pay < 30000? (gross_pay < 25000? (gross_pay < 20000? (gross_pay < 15000? (gross_pay < 12000?(gross_pay < 8000? (gross_pay < 6000?150:300):400):500):600):750): 850):900): 950): 1000): 1100) :1200):1300) :1400) :1500) : 1600):1700"
-      },
-      {
-        "id": 9,
-        "name": "NHIF Relief",
-        "formula": "nhif * 0.15"
-      },
-      {
-        "id": 10,
-        "name": "PAYE",
-        "formula": "tax_before_relief-personal_relief-nhif_relief>=0?tax_before_relief-personal_relief-nhif_relief:0"
-      },
-      {
-        "id": 11,
-        "name": "Housing Levy",
-        "formula": "gross_pay * 0.015"
-      },
-      {
-        "id": 12,
-        "name": "Total Deductions",
-        "formula": "paye + nssf + nhif + housing_levy+ SC + AD + LO + WE + NO + HE"
-      },
-      {
-        "id": 13,
-        "name": "Net Pay",
-        "formula": "gross_pay - total_deductions"
-      }
-    ],
-    "reports": [
-      {
-        "id": 2,
-        "first_name": "Jane",
-        "last_name": "Doe",
-        "email": "janedoe@gmail.com",
-        "phone": "254700000001",
-        "id_number": "12345668",
-        "email_address": "aa@gmail.com",
-        "nhif_number": "12345668",
-        "employee_id": 2,
-        "branch": "Rongai",
-        "department": "Tech",
-        "BS": 60000,
-        "OT": 5000,
-        "SC": 9000,
-        "month": 9,
-        "year": 2023,
-        "gross_pay": "65000.00",
-        "nssf_tier_1": "360.00",
-        "nssf_tier_2": "720.00",
-        "nssf": "1080.00",
-        "taxable_income": "63920.00",
-        "tax_before_relief": "13959.35",
-        "personal_relief": "2400.00",
-        "nhif": "1300.00",
-        "nhif_relief": "195.00",
-        "paye": "11364.35",
-        "housing_levy": "975.00",
-        "total_deductions": "23719.35",
-        "net_pay": "41280.65"
-      },
-      {
-        "first_name": "jjj",
-        "last_name": "aaa",
-        "id_number": "aaas",
-        "phone": "254769735528",
-        "email_address": "aa@gmail.com",
-        "id": 4,
-        "employee_id": 4,
-        "nhif_number": "324",
-        "branch": "Rongai",
-        "department": "Sales",
-        "month": 9,
-        "year": 2023,
-        "gross_pay": "0.00",
-        "nssf_tier_1": "0.00",
-        "nssf_tier_2": "0.00",
-        "nssf": "0.00",
-        "taxable_income": "0.00",
-        "tax_before_relief": "0.00",
-        "personal_relief": "0.00",
-        "nhif": "150.00",
-        "nhif_relief": "22.50",
-        "paye": "0.00",
-        "housing_levy": "0.00",
-        "total_deductions": "150.00",
-        "net_pay": "-150.00"
-      },
-      {
-        "first_name": "John",
-        "last_name": "Doe",
-        "id_number": "123435",
-        "phone": "342342",
-        "email_address": "aa@gmail.com",
-        "id": 3,
-        "employee_id": 3,
-        "nhif_number": "afs",
-        "branch": "CBD",
-        "department": "Tech",
-        "BS": 90000,
-        "month": 9,
-        "year": 2023,
-        "gross_pay": "90000.00",
-        "nssf_tier_1": "360.00",
-        "nssf_tier_2": "720.00",
-        "nssf": "1080.00",
-        "taxable_income": "88920.00",
-        "tax_before_relief": "21459.35",
-        "personal_relief": "2400.00",
-        "nhif": "1600.00",
-        "nhif_relief": "240.00",
-        "paye": "18819.35",
-        "housing_levy": "1350.00",
-        "total_deductions": "22849.35",
-        "net_pay": "67150.65"
-      }
-    ],
-    "active_month": {
-      "month": 9,
-      "year": 2023
+  "employees": [
+    {
+      "id": 2,
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "janedoe@gmail.com",
+      "phone": "254700000001",
+      "id_number": "12345668",
+      "email_address": "aa@gmail.com",
+      "nhif_number": "12345668",
+      "employee_id": "34234",
+      "branch": "Rongai",
+      "department": "Tech"
+    },
+    {
+      "first_name": "John",
+      "last_name": "Doe",
+      "id_number": "123435",
+      "phone": "342342",
+      "email_address": "aa@gmail.com",
+      "id": 3,
+      "code": "356354",
+      "nhif_number": "afs",
+      "branch": "CBD",
+      "department": "Tech"
+    },
+    {
+      "first_name": "jjj",
+      "last_name": "aaa",
+      "id_number": "aaas",
+      "phone": "254769735528",
+      "email_address": "aa@gmail.com",
+      "id": 4,
+      "code": "576",
+      "nhif_number": "324",
+      "branch": "Rongai",
+      "department": "Sales"
+    },
+    {
+      "first_name": "ass",
+      "last_name": "aaa",
+      "id_number": "34234",
+      "phone": "23423",
+      "email_address": "fawa@gmail.com",
+      "nhif_number": "2343",
+      "branch": "Rongai",
+      "department": "Sales",
+      "id": 5
     }
+  ],
+  "income_types": [
+    {
+      "id": 1,
+      "name": "Basic Salary",
+      "code": "BS"
+    },
+    {
+      "id": 2,
+      "name": "Overtime",
+      "code": "OT"
+    },
+    {
+      "id": 3,
+      "name": "Bonus",
+      "code": "BN"
+    },
+    {
+      "id": 4,
+      "name": "Commission",
+      "code": "CO"
+    },
+    {
+      "id": 5,
+      "name": "Allowance",
+      "code": "AL"
+    }
+  ],
+  "incomes": [
+    {
+      "employee_id": 2,
+      "income_type_id": 1,
+      "amount": 60000,
+      "month": 1,
+      "year": 2023,
+      "id": 2
+    },
+    {
+      "employee_id": 3,
+      "income_type_id": 1,
+      "amount": 20000,
+      "month": 1,
+      "year": null,
+      "id": 3
+    },
+    {
+      "employee_id": 2,
+      "income_type_id": 4,
+      "amount": 10000,
+      "month": 1,
+      "year": 2023,
+      "id": 4
+    },
+    {
+      "employee_id": 2,
+      "income_type_id": 1,
+      "amount": 60000,
+      "month": 9,
+      "year": 2023,
+      "id": 5
+    },
+    {
+      "employee_id": 3,
+      "income_type_id": 1,
+      "amount": 90000,
+      "month": 9,
+      "year": 2023,
+      "id": 6
+    },
+    {
+      "employee_id": 2,
+      "income_type_id": 2,
+      "amount": 5000,
+      "month": 9,
+      "year": 2023,
+      "id": 7
+    }
+  ],
+  "deduction_types": [
+    {
+      "id": 1,
+      "name": "Sacco",
+      "code": "SC"
+    },
+    {
+      "id": 2,
+      "name": "Advance",
+      "code": "AD"
+    },
+    {
+      "id": 3,
+      "name": "Welfare",
+      "code": "WE"
+    },
+    {
+      "id": 4,
+      "name": "Loan",
+      "code": "LO"
+    },
+    {
+      "id": 5,
+      "name": "Commission",
+      "code": "CO"
+    },
+    {
+      "id": 6,
+      "name": "HELB",
+      "code": "HE"
+    }
+  ],
+  "deductions": [
+    {
+      "employee_id": 2,
+      "deduction_type_id": 1,
+      "amount": 10000,
+      "month": 1,
+      "year": 2024,
+      "id": 1
+    },
+    {
+      "employee_id": 2,
+      "deduction_type_id": 1,
+      "amount": 9000,
+      "month": 9,
+      "year": 2023,
+      "id": 2
+    }
+  ],
+  "formulas": [
+    {
+      "id": 1,
+      "name": "Gross Pay",
+      "formula": "BS + CO + OT + FD"
+    },
+    {
+      "id": 2,
+      "name": "NSSF Tier 1",
+      "formula": "gross_pay<=6000?0.06*gross_pay:360"
+    },
+    {
+      "id": 3,
+      "name": "NSSF Tier 2",
+      "formula": "gross_pay>6000?(gross_pay<18000?0.06*(gross_pay-6000):720):0"
+    },
+    {
+      "id": 4,
+      "name": "NSSF",
+      "formula": "nssf_tier_1 + nssf_tier_2"
+    },
+    {
+      "id": 5,
+      "name": "Taxable Income",
+      "formula": "gross_pay - nssf"
+    },
+    {
+      "id": 6,
+      "name": "Tax Before Relief",
+      "formula": "taxable_income <= 32333 ? (taxable_income > 24000 ? (2400 + (taxable_income - 24000) * 0.25) : taxable_income * 0.1) : (4483.25 + (taxable_income-32333) * 0.3)"
+    },
+    {
+      "id": 7,
+      "name": "Personal Relief",
+      "formula": "taxable_income>24000? 2400: taxable_income * 0.1"
+    },
+    {
+      "id": 8,
+      "name": "NHIF",
+      "formula": "gross_pay<100000? (gross_pay<90000? (gross_pay < 80000?(gross_pay < 70000? (gross_pay < 60000? (gross_pay < 50000 ? (gross_pay < 45000? (gross_pay < 40000? (gross_pay < 35000? (gross_pay < 30000? (gross_pay < 25000? (gross_pay < 20000? (gross_pay < 15000? (gross_pay < 12000?(gross_pay < 8000? (gross_pay < 6000?150:300):400):500):600):750): 850):900): 950): 1000): 1100) :1200):1300) :1400) :1500) : 1600):1700"
+    },
+    {
+      "id": 9,
+      "name": "NHIF Relief",
+      "formula": "nhif * 0.15"
+    },
+    {
+      "id": 10,
+      "name": "PAYE",
+      "formula": "tax_before_relief-personal_relief-nhif_relief>=0?tax_before_relief-personal_relief-nhif_relief:0"
+    },
+    {
+      "id": 11,
+      "name": "Housing Levy",
+      "formula": "gross_pay * 0.015"
+    },
+    {
+      "id": 12,
+      "name": "Total Deductions",
+      "formula": "paye + nssf + nhif + housing_levy+ SC + AD + LO + WE + NO + HE"
+    },
+    {
+      "id": 13,
+      "name": "Net Pay",
+      "formula": "gross_pay - total_deductions"
+    }
+  ],
+  "reports": [
+    {
+      "id": 2,
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "janedoe@gmail.com",
+      "phone": "254700000001",
+      "id_number": "12345668",
+      "email_address": "aa@gmail.com",
+      "nhif_number": "12345668",
+      "employee_id": 2,
+      "branch": "Rongai",
+      "department": "Tech",
+      "BS": 60000,
+      "OT": 5000,
+      "SC": 9000,
+      "month": 9,
+      "year": 2023,
+      "gross_pay": "65000.00",
+      "nssf_tier_1": "360.00",
+      "nssf_tier_2": "720.00",
+      "nssf": "1080.00",
+      "taxable_income": "63920.00",
+      "tax_before_relief": "13959.35",
+      "personal_relief": "2400.00",
+      "nhif": "1300.00",
+      "nhif_relief": "195.00",
+      "paye": "11364.35",
+      "housing_levy": "975.00",
+      "total_deductions": "23719.35",
+      "net_pay": "41280.65"
+    },
+    {
+      "first_name": "jjj",
+      "last_name": "aaa",
+      "id_number": "aaas",
+      "phone": "254769735528",
+      "email_address": "aa@gmail.com",
+      "id": 4,
+      "employee_id": 4,
+      "nhif_number": "324",
+      "branch": "Rongai",
+      "department": "Sales",
+      "month": 9,
+      "year": 2023,
+      "gross_pay": "0.00",
+      "nssf_tier_1": "0.00",
+      "nssf_tier_2": "0.00",
+      "nssf": "0.00",
+      "taxable_income": "0.00",
+      "tax_before_relief": "0.00",
+      "personal_relief": "0.00",
+      "nhif": "150.00",
+      "nhif_relief": "22.50",
+      "paye": "0.00",
+      "housing_levy": "0.00",
+      "total_deductions": "150.00",
+      "net_pay": "-150.00"
+    },
+    {
+      "first_name": "John",
+      "last_name": "Doe",
+      "id_number": "123435",
+      "phone": "342342",
+      "email_address": "aa@gmail.com",
+      "id": 3,
+      "employee_id": 3,
+      "nhif_number": "afs",
+      "branch": "CBD",
+      "department": "Tech",
+      "BS": 90000,
+      "month": 9,
+      "year": 2023,
+      "gross_pay": "90000.00",
+      "nssf_tier_1": "360.00",
+      "nssf_tier_2": "720.00",
+      "nssf": "1080.00",
+      "taxable_income": "88920.00",
+      "tax_before_relief": "21459.35",
+      "personal_relief": "2400.00",
+      "nhif": "1600.00",
+      "nhif_relief": "240.00",
+      "paye": "18819.35",
+      "housing_levy": "1350.00",
+      "total_deductions": "22849.35",
+      "net_pay": "67150.65"
+    }
+  ],
+  "active_month": {
+    "month": 9,
+    "year": 2023
   }
+}

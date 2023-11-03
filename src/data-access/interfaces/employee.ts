@@ -11,13 +11,10 @@ export interface Employee {
     department: string;
 }
 export const TEmployee = {
-    id: '',
-    employee_id: '',
     first_name: '',
     last_name: '',
     email: '',
     phone: '',
-    id_number: '',
     branch: '',
     department: '',
 };
