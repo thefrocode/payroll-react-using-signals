@@ -21,7 +21,7 @@ import {
 } from "../api/employees";
 import { Employee } from "../interfaces/employee";
 
-function useEmployeeSource(): {
+export function useEmployee(): {
   employees: Employee[];
   no_of_employees?: number;
   addEmployee: UseMutateFunction<void, unknown, Employee, unknown>;
@@ -100,17 +100,17 @@ function useEmployeeSource(): {
     filterEmployees,
   };
 }
-const EmployeesContext = createContext<ReturnType<typeof useEmployeeSource>>(
-  {} as unknown as ReturnType<typeof useEmployeeSource>
-);
+// const EmployeesContext = createContext<ReturnType<typeof useEmployeeSource>>(
+//   {} as unknown as ReturnType<typeof useEmployeeSource>
+// );
 
-export function useEmployee() {
-  return useContext(EmployeesContext);
-}
-export function EmployeesProvider({ children }: { children: React.ReactNode }) {
-  return (
-    <EmployeesContext.Provider value={useEmployeeSource()}>
-      {children}
-    </EmployeesContext.Provider>
-  );
-}
+// export function useEmployee() {
+//   return useContext(EmployeesContext);
+// }
+// export function EmployeesProvider({ children }: { children: React.ReactNode }) {
+//   return (
+//     <EmployeesContext.Provider value={useEmployeeSource()}>
+//       {children}
+//     </EmployeesContext.Provider>
+//   );
+// }
