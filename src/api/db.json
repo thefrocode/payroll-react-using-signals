@@ -2,11 +2,11 @@
   "employees": [
     {
       "id": 2,
-      "first_name": "Jane",
+      "first_name": "Janeh",
       "last_name": "Doe",
       "email": "janedoe@gmail.com",
       "phone": "254700000001",
-      "id_number": "12345668",
+      "id_number": "123456689",
       "email_address": "aa@gmail.com",
       "nhif_number": "12345668",
       "employee_id": "34234",
@@ -80,7 +80,7 @@
     {
       "employee_id": 2,
       "income_type_id": 1,
-      "amount": 60000,
+      "amount": 700000,
       "month": 1,
       "year": 2023,
       "id": 2
@@ -88,7 +88,7 @@
     {
       "employee_id": 3,
       "income_type_id": 1,
-      "amount": 20000,
+      "amount": 30000,
       "month": 1,
       "year": null,
       "id": 3
@@ -124,6 +124,51 @@
       "month": 9,
       "year": 2023,
       "id": 7
+    },
+    {
+      "employee_id": "3",
+      "income_type_id": "5",
+      "amount": "9000",
+      "id": 8
+    },
+    {
+      "employee_id": 3,
+      "income_type_id": 4,
+      "amount": 32000,
+      "id": 11
+    },
+    {
+      "v": {
+        "month": 11,
+        "year": 2023
+      },
+      "i": 1,
+      "employee_id": 4,
+      "income_type_id": 2,
+      "amount": 7000,
+      "id": 12
+    },
+    {
+      "month": 11,
+      "year": 2023,
+      "employee_id": 5,
+      "income_type_id": 2,
+      "amount": 3000,
+      "id": 13
+    },
+    {
+      "month": 11,
+      "year": 2023,
+      "employee_id": 3,
+      "income_type_id": 2,
+      "amount": 2000,
+      "id": 14
+    },
+    {
+      "employee_id": 3,
+      "income_type_id": 2,
+      "amount": 3000,
+      "id": 15
     }
   ],
   "deduction_types": [
@@ -329,6 +374,33 @@
       "housing_levy": "1350.00",
       "total_deductions": "22849.35",
       "net_pay": "67150.65"
+    },
+    {
+      "first_name": "ass",
+      "last_name": "aaa",
+      "id_number": "34234",
+      "phone": "23423",
+      "email_address": "fawa@gmail.com",
+      "nhif_number": "2343",
+      "branch": "Rongai",
+      "department": "Sales",
+      "id": 5,
+      "month": 11,
+      "year": 2023,
+      "employee_id": 5,
+      "gross_pay": "0.00",
+      "nssf_tier_1": "0.00",
+      "nssf_tier_2": "0.00",
+      "nssf": "0.00",
+      "taxable_income": "0.00",
+      "tax_before_relief": "0.00",
+      "personal_relief": "0.00",
+      "nhif": "150.00",
+      "nhif_relief": "22.50",
+      "paye": "0.00",
+      "housing_levy": "0.00",
+      "total_deductions": "150.00",
+      "net_pay": "-150.00"
     }
   ],
   "active_month": {

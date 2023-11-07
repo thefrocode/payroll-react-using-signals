@@ -1,5 +1,8 @@
 import { Home } from "./home";
 import { Index } from "./pages";
+import { DeductionsAdd } from "./pages/deductions/deductions-add";
+import { DeductionsEdit } from "./pages/deductions/deductions-edit";
+import { DeductionsList } from "./pages/deductions/deductions-list";
 import { EmployeesAdd } from "./pages/employees/employees-add";
 import { EmployeesEdit } from "./pages/employees/employees-edit";
 import { EmployeesList } from "./pages/employees/employees-list";
@@ -63,6 +66,28 @@ export const routes = [
       {
         path: "/add",
         element: <IncomesAdd />,
+      },
+    ],
+  },
+  {
+    path: "/deductions",
+    element: <Home />,
+    children: [
+      {
+        path: "/",
+        element: (
+          <>
+            <DeductionsList />
+          </>
+        ),
+      },
+      {
+        path: "/edit/:id",
+        element: <DeductionsEdit />,
+      },
+      {
+        path: "/add",
+        element: <DeductionsAdd />,
       },
     ],
   },

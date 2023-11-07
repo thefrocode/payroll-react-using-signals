@@ -1,3 +1,5 @@
+import { useAppData } from "@/App";
+import { useSignalEffect } from "@preact/signals-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useCallback, useContext, useEffect } from "react";
 import { createActiveMonth, fetchActiveMonth, updateActiveMonth } from "../api/shared";
@@ -9,17 +11,41 @@ export function useSharedSource(): {
   closeMonth: ()=> void
 } {
   const queryClient = useQueryClient();
-  const { data: active_month, error } = useQuery(
+  const { active_month } = useAppData();
+
+  // useSignalEffect(()=>{
+  //   console.log("active_month", active_month)
+  //   addActiveMonth(active_month.value)
+  // })
+  const { data, error } = useQuery(
     ["active_month"],
     fetchActiveMonth
   );
+  const currentDate = new Date();
+  useEffect(() => {
+    console.log("active_month", data);
+    if (data) {
+      active_month.value = data;
+      if(Object.keys(data).length === 0){
+        console.log("active_month not defined", data);
+        addActiveMonth({
+          month: currentDate.getMonth() + 1,
+          year: currentDate.getFullYear(),
+        });
+      }
+    } 
+
+  }, [data]);
 
   const { mutate: addActiveMonth } = useMutation({
     mutationFn: createActiveMonth,
-    onSuccess: () => {
-      console.log("Active month set", active_month);
+    onSuccess: (result,variables) => {
+      console.log("active_month_success", variables);
+      active_month.value = variables;
     },
-    onError: (error) => {},
+    onError: (error) => {
+      console.log("active_month", error);
+    },
   });
   const { mutate: editActiveMonth } = useMutation({
     mutationFn: updateActiveMonth,
@@ -34,17 +60,17 @@ export function useSharedSource(): {
     editActiveMonth();
   }, []);
 
-  const currentDate = new Date();
-  useEffect(() => {
-    if (!active_month) {
-      addActiveMonth({
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear(),
-      });
-    }
-  }, []);
+  // const currentDate = new Date();
+  // useEffect(() => {
+  //   if (!active_month) {
+  //     addActiveMonth({
+  //       month: currentDate.getMonth() + 1,
+  //       year: currentDate.getFullYear(),
+  //     });
+  //   }
+  // }, []);
 
-  return { active_month, closeMonth };
+  return { closeMonth };
 }
 const ActiveContext = createContext<ReturnType<typeof useSharedSource>>(
   {} as unknown as ReturnType<typeof useSharedSource>

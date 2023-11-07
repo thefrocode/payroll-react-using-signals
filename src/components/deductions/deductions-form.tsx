@@ -1,5 +1,5 @@
 import { Employee } from "@/data-access/interfaces/employee";
-import { IncomeType } from "@/data-access/interfaces/income-type";
+import { DeductionType } from "@/data-access/interfaces/deduction-type";
 import { Label } from "@radix-ui/react-label";
 import { SelectGroup } from "@radix-ui/react-select";
 import * as z from "zod";
@@ -29,34 +29,34 @@ const FormSchema = z.object({
     .string({
       required_error: "Please select an employee.",
     }),
-  income_type_id: z.string({
-    required_error: "Please select an income type.",
+  deduction_type_id: z.string({
+    required_error: "Please select an deduction type.",
   }),
   amount: z.string({
     required_error: "Please enter an amount.",
   }),
 });
 
-export function IncomesForm(props: any) {
-  const { income, onSave, employees, income_types, active_month } = props;
+export function DeductionsForm(props: any) {
+  const { deduction, onSave, employees, deduction_types, active_month } = props;
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      employee_id: income?.employee_id.toString(),
-      income_type_id: income?.income_type_id.toString(),
-      amount: income?income?.amount.toString():'0',
+      employee_id: deduction?.employee_id.toString(),
+      deduction_type_id: deduction?.deduction_type_id.toString(),
+      amount: deduction?deduction?.amount.toString():'0',
     },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     
-    onSave({  ...active_month, employee_id: parseInt(data.employee_id), income_type_id: parseInt(data.income_type_id), amount: parseInt(data.amount) });
+    onSave({  ...active_month, employee_id: parseInt(data.employee_id), deduction_type_id: parseInt(data.deduction_type_id), amount: parseInt(data.amount) });
   }
 
   return (
     <Form {...form}>
-      <h1 className="text-2xl font-bold text-center">Add Income</h1>
+      <h1 className="text-2xl font-bold text-center">Add Deduction</h1>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-1/2 mx-auto gap-4">
         <FormField
           control={form.control}
@@ -86,22 +86,22 @@ export function IncomesForm(props: any) {
         />
         <FormField
           control={form.control}
-          name="income_type_id"
+          name="deduction_type_id"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Income Type</FormLabel>
+              <FormLabel>Deduction Type</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select an income type" />
+                    <SelectValue placeholder="Select an deduction type" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   {/* <SelectItem value="2">Apples</SelectItem> */}
-                  {income_types.value &&
-                    income_types.value.map((income_type: IncomeType) => (
-                      <SelectItem key={income_type.id} value={income_type.id.toString()}>
-                        {income_type.name}
+                  {deduction_types.value &&
+                    deduction_types.value.map((deduction_type: DeductionType) => (
+                      <SelectItem key={deduction_type.id} value={deduction_type.id.toString()}>
+                        {deduction_type.name}
                       </SelectItem>
                     ))}
                 </SelectContent>

@@ -5,7 +5,6 @@ import { Label } from "@radix-ui/react-label";
 
 export function EmployeesForm(props: any) {
   const { employee, onSave } = props;
-  console.log(employee);
   const {
     register,
     handleSubmit,

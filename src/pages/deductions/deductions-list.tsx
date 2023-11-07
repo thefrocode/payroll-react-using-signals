@@ -1,21 +1,21 @@
 import { AgGridReact } from "ag-grid-react";
 import { Link } from "@tanstack/react-location";
-import { useIncomeSource } from "@/data-access/store/income";
-import { TDetailedIncome } from "@/data-access/interfaces/income";
+import { useDeductionSource } from "@/data-access/store/deduction";
+import { TDetailedDeduction } from "@/data-access/interfaces/deduction";
 import { Button } from "@/components/ui/button";
 import { useAppData } from "@/App";
-import { useIncomeTypeSource } from "@/data-access/store/income-type";
+import { useDeductionTypeSource } from "@/data-access/store/deduction-type";
 import { useSharedSource } from "@/data-access/store/active";
 
-export function IncomesList() {
-  const { removeIncome } = useIncomeSource();
-  const { error } = useIncomeTypeSource()
-  const { detailedIncomes } = useAppData();
+export function DeductionsList() {
+  const { removeDeduction } = useDeductionSource();
+  const { error } = useDeductionTypeSource()
+  const { detailedDeductions } = useAppData();
   const columnDefs: {
     headerName: string;
     field: string;
     cellRenderer?: (params: any) => any;
-  }[] = Object.keys(TDetailedIncome).map((key) => ({
+  }[] = Object.keys(TDetailedDeduction).map((key) => ({
     headerName: key.replace("_", " ").toString().toLocaleUpperCase(),
     field: key,
     width: 170,
@@ -27,14 +27,14 @@ export function IncomesList() {
       return (
         <div className="flex flex-row gap-2">
           <Button asChild className="py-0 px-3 mt-1">
-            <Link key={params.value} to={`/incomes/edit/${params.value}`}>
+            <Link key={params.value} to={`/deductions/edit/${params.value}`}>
               Edit
             </Link>
           </Button>
           <Button
             className="py-0 px-3 mt-1"
             key={params.value}
-            onClick={() => removeIncome(params.value)}
+            onClick={() => removeDeduction(params.value)}
           >
             Edit
           </Button>
@@ -46,14 +46,14 @@ export function IncomesList() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-row justify-between">
-        <h1 className="text-2xl font-bold">Incomes</h1>
+        <h1 className="text-2xl font-bold">Deductions</h1>
         <Button asChild className="float-right">
-          <Link to="/incomes/add">Add Income</Link>
+          <Link to="/deductions/add">Add Deduction</Link>
         </Button>
       </div>
       <div className="ag-theme-alpine" style={{ height: 430 }}>
         <AgGridReact
-          rowData={detailedIncomes.value} // Row Data for Rows
+          rowData={detailedDeductions.value} // Row Data for Rows
           columnDefs={columnDefs}
           gridOptions={{
             rowHeight: 45,

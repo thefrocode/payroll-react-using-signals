@@ -3,22 +3,24 @@ import { Link } from "@tanstack/react-location";
 import { TEmployee } from "@/data-access/interfaces/employee";
 import { useEmployee } from "@/data-access/store/employees-store";
 import { Button } from "@/components/ui/button";
+import { useAppData } from "@/App";
 
 
 export function EmployeesList() {
-  const { employees, removeEmployee } = useEmployee();
-
+  console.log("EmployeesList Rendered");
+  const { removeEmployee } = useEmployee();
+  const { filteredEmployees: employees } = useAppData();
   const columnDefs: {
     headerName: string;
     field: string;
     resizable: boolean;
-   
+
     cellRenderer?: (params: any) => any;
   }[] = Object.keys(TEmployee).map((key) => ({
     headerName: key.replace("_", " ").toString().toLocaleUpperCase(),
     field: key,
     resizable: true,
-    width: 150
+    width: 150,
   }));
   columnDefs.push({
     field: "id",
@@ -32,7 +34,8 @@ export function EmployeesList() {
               Edit
             </Link>
           </Button>
-          <Button className="py-0 px-3 mt-1"
+          <Button
+            className="py-0 px-3 mt-1"
             key={params.value}
             onClick={() => removeEmployee(params.value)}
           >
@@ -42,7 +45,7 @@ export function EmployeesList() {
       );
     },
   });
- 
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-row justify-between">
@@ -53,9 +56,13 @@ export function EmployeesList() {
       </div>
       <div className="ag-theme-alpine" style={{ height: 430 }}>
         <AgGridReact
-          rowData={employees} // Row Data for Rows
+          rowData={employees.value} // Row Data for Rows
           columnDefs={columnDefs}
-          gridOptions={{rowHeight: 45, pagination: true, paginationPageSize: 10}}
+          gridOptions={{
+            rowHeight: 45,
+            pagination: true,
+            paginationPageSize: 10,
+          }}
         />
       </div>
     </div>

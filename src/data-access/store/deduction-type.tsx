@@ -1,25 +1,25 @@
 import { useAppData } from "@/App";
 import { useQuery} from "@tanstack/react-query";
 import { useEffect } from "react";
-import { fetchIncomeTypes } from "../api/income-types";
+import { fetchDeductionTypes } from "../api/deduction-types";
 
 
 
-export function useIncomeTypeSource(): {
+export function useDeductionTypeSource(): {
   error: any;
 } {
-  const { income_types } = useAppData()
+  const { deduction_types } = useAppData()
   const { data, error } = useQuery(
-    ["income_types"],
-    fetchIncomeTypes,
+    ["deduction_types"],
+    fetchDeductionTypes,
     {
       initialData: [],
     }
   );
   useEffect(()=>{
-    console.log("useIncomeTypeSource", data)
+    console.log("useDeductionTypeSource", data)
     if(data){
-      income_types.value = data
+      deduction_types.value = data
     }
   },[data])
 

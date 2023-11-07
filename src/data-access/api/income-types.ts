@@ -1,5 +1,6 @@
 import axios from "axios";
-import { IncomeType } from "../../interfaces/income-type";
+import { IncomeType } from "../interfaces/income-type";
+
 //import axios from "../../config/axiosConfig";
 axios.defaults.baseURL = "http://localhost:3001";
 export async function fetchIncomeTypes(): Promise<IncomeType[]> {

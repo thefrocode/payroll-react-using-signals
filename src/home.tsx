@@ -1,8 +1,8 @@
 import { Link, Outlet } from "@tanstack/react-location";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
-import { UserCircle2 } from "lucide-react";
-import { useEmployee } from "./data-access/store/employees-store";
+import { Filter, UserCircle2 } from "lucide-react";
+
 import {
   User2Icon,
   HomeIcon,
@@ -13,6 +13,8 @@ import {
   SaveIcon,
 } from "lucide-react";
 import { Toaster } from "./components/ui/toaster";
+import { useAppData } from "./App";
+
 
 const Navbar = () => {
   return (
@@ -22,7 +24,7 @@ const Navbar = () => {
         <User2Icon className="h-16 w-16 text-center self-center" />
         <ul>
           <li>
-            <Link to="/" className="flex flex-row gap-4 p-3">
+            <Link to="/index" className="flex flex-row gap-4 p-3">
               <HomeIcon /> Home
             </Link>
           </li>
@@ -62,7 +64,7 @@ const Navbar = () => {
   );
 };
 const TopBar = () => {
-  const { filterEmployees } = useEmployee();
+  const { filter } = useAppData();
   return (
     <div className="sticky top-0 p-4">
       <div className="flex flex-row gap-4 justify-between mx-4">
@@ -70,7 +72,7 @@ const TopBar = () => {
           className="w-[400px]"
           placeholder="Search"
           onChange={(e) => {
-            filterEmployees(e.target.value);
+            filter.value = e.target.value;
           }}
         />
         <Button variant="outline" size="icon">
