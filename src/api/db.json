@@ -169,6 +169,14 @@
       "income_type_id": 2,
       "amount": 3000,
       "id": 15
+    },
+    {
+      "month": 11,
+      "year": 2023,
+      "employee_id": 2,
+      "income_type_id": 1,
+      "amount": 10000,
+      "id": 16
     }
   ],
   "deduction_types": [
@@ -219,6 +227,14 @@
       "month": 9,
       "year": 2023,
       "id": 2
+    },
+    {
+      "month": 11,
+      "year": 2023,
+      "employee_id": 2,
+      "deduction_type_id": 1,
+      "amount": 900,
+      "id": 3
     }
   ],
   "formulas": [

@@ -1,5 +1,6 @@
-import { Income } from "../../interfaces/income";
+
 import axios from "axios";
+import { Income } from "../interfaces/income";
 
 //import axios from "../../config/axiosConfig";
 axios.defaults.baseURL = "http://localhost:3001";

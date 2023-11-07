@@ -9,6 +9,9 @@ import { EmployeesList } from "./pages/employees/employees-list";
 import { IncomesAdd } from "./pages/incomes/incomes-add";
 import { IncomesEdit } from "./pages/incomes/incomes-edit";
 import { IncomesList } from "./pages/incomes/incomes-list";
+import { ReportsList } from "./pages/reports/reports-list";
+import { ReportsNHIF } from "./pages/reports/reports-nhif";
+import { ReportsNSSF } from "./pages/reports/reports-nssf";
 
 export const routes = [
   {
@@ -88,6 +91,24 @@ export const routes = [
       {
         path: "/add",
         element: <DeductionsAdd />,
+      },
+    ],
+  },
+  {
+    path: "/reports",
+    element: <Home />,
+    children: [
+      {
+        path: "/",
+        element: <ReportsList />,
+      },
+      {
+        path: "/nhif",
+        element: <ReportsNHIF />,
+      },
+      {
+        path: "/nssf",
+        element: <ReportsNSSF />,
       },
     ],
   },

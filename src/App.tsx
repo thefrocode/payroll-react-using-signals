@@ -5,13 +5,16 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 import { Outlet, ReactLocation, Router } from "@tanstack/react-location";
 import { routes } from "./routes";
 import { createContext, useContext } from "react";
-import { computed, Signal, signal } from "@preact/signals-react";
+import { computed, effect, Signal, signal } from "@preact/signals-react";
 import { Employee } from "./data-access/interfaces/employee";
-import { Income } from "./data-access/interfaces/income";
+import { DetailedIncome, Income } from "./data-access/interfaces/income";
 import { IncomeType } from "./data-access/interfaces/income-type";
 import { ActiveMonth } from "./data-access/interfaces/active-month";
 import { DeductionType } from "./data-access/interfaces/deduction-type";
-import { Deduction } from "./data-access/interfaces/deduction";
+import { Deduction, DetailedDeduction } from "./data-access/interfaces/deduction";
+import { Formula } from "./data-access/interfaces/formula";
+import safeEvaluate from "./utils/safe-evaluate";
+import { re } from "mathjs";
 
 
 const queryClient = new QueryClient({
@@ -24,8 +27,6 @@ const queryClient = new QueryClient({
   },
 });
 export function useAppSource() {
-  const currentDate = new Date();
-  //const active_month:Signal<ActiveMonth> = signal({month:currentDate.getMonth()+ 1, year:currentDate.getFullYear()});
   const active_month:Signal<ActiveMonth> = signal({});
   const employees: Signal<Employee[]> = signal([]);
   const filter = signal("");
@@ -52,13 +53,13 @@ export function useAppSource() {
 
   const detailedIncomes = computed(() => {
     console.log("Income Types", income_types.value);
-    return incomes.value.map((income) => {
+    const detailedIncomes:DetailedIncome[]=incomes.value.map((income) => {
       const employee = employees.value?.find(
         (employee) => employee.id === income.employee_id
       );
       const income_type = income_types.value.find(
         (income_type) => income_type.id === income.income_type_id
-      );
+      )!;
       return {
         ...income,
         employee_name: employee?(employee?.first_name + " " + employee?.last_name):undefined,
@@ -66,19 +67,20 @@ export function useAppSource() {
         income_type_code: income_type?.code,
       };
     }).filter((employee)=>employee.employee_name);
+    return detailedIncomes;
   });
 
   const deduction_types: Signal<DeductionType[]> = signal([]);
   const deductions:Signal<Deduction[]> = signal([]);
   
   const detailedDeductions = computed(() => {
-    return deductions.value.map((deduction) => {
+    const detailedDeductions: DetailedDeduction[]= deductions.value.map((deduction) => {
       const employee = employees.value?.find(
         (employee) => employee.id === deduction.employee_id
       );
       const deduction_type = deduction_types.value.find(
         (deduction_type) => deduction_type.id === deduction.deduction_type_id
-      );
+      )!;
       return {
         ...deduction,
         employee_name: employee?(employee?.first_name + " " + employee?.last_name): undefined,
@@ -86,9 +88,71 @@ export function useAppSource() {
         deduction_type_code: (deduction_type?.code),
       };
     }).filter((employee)=>employee.employee_name);
+    return detailedDeductions;
   });
+  const formulas:Signal<Formula[]> = signal([])
+
+  const formattedFormulas = computed(()=>{
+    return formulas.value.map((formula) => {
+      return {
+        ...formula,
+        name: formula.name.replace(/\s+/g, '_').toLocaleLowerCase(),
+      };
+    });
+  })
 
   const reports = signal([]);
+
+  const employeeIncomeDeduction= computed(()=>{
+    const employeeInfo = employees.value?.map((employee) => {
+      //Each income to have its own column
+      const employeeIncomes = detailedIncomes.value
+        .filter((income) => income.employee_id === employee.id)
+        .reduce(
+          (
+            accumulator: { [key: string]: number },
+            currentValue: DetailedIncome
+          ) => {
+            accumulator[currentValue.income_type_code] = currentValue.amount;
+            return accumulator;
+          },
+          {}
+        );
+
+      const employeeDeductions = detailedDeductions.value
+        .filter((deduction) => deduction.employee_id === employee.id)
+        .reduce(
+          (
+            accumulator: { [key: string]: number },
+            currentValue: DetailedDeduction
+          ) => {
+            accumulator[currentValue.deduction_type_code] = currentValue.amount;
+            return accumulator;
+          },
+          {}
+        );
+
+      return {
+        ...employee,
+        ...employeeIncomes,
+        ...employeeDeductions,
+        month: active_month.value?.month,
+        year: active_month.value?.year,
+        employee_id: employee.id,
+      };
+    }).filter((employee)=>employee.first_name);
+
+    employeeInfo?.forEach((employee_income: any) => {
+      formattedFormulas.value.forEach((formula: any) => {
+        employee_income[formula.name] = safeEvaluate(
+          formula.formula,
+          employee_income
+        ).toFixed(2);
+      });
+    });
+    return employeeInfo;
+  })
+  effect(()=>{console.log("employeeIncomeDeduction",employeeIncomeDeduction.value)})
 
 
   return {
@@ -103,7 +167,9 @@ export function useAppSource() {
     deductions,
     deduction_types,
     detailedDeductions,
-    reports
+    formulas,
+    reports,
+    employeeIncomeDeduction
   };
 }
 
